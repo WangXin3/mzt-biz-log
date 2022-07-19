@@ -49,8 +49,9 @@ public @interface LogRecord {
     String condition() default "";
 
     /**
-     * <p>是否是批量操作
+     * <p>是否是批量操作，3.0.0版本移除了这个功能
      * */
+    @Deprecated
     boolean isBatch() default false;
 
     /**
