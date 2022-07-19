@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerA
 
 @SpringBootApplication(exclude = {DataSourceTransactionManagerAutoConfiguration.class})
 @MapperScan(basePackages = "com.mzt.logserver.repository.mapper", annotationClass = Mapper.class)
-@EnableLogRecord(tenant = "com.mzt.test")
+@EnableLogRecord
 public class Main {
 
     public static void main(String[] args) {

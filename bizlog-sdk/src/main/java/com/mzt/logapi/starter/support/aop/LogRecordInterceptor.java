@@ -37,8 +37,6 @@ public class LogRecordInterceptor extends LogRecordValueParser implements Initia
 
     private LogRecordOperationSource logRecordOperationSource;
 
-    private String tenantId;
-
     private ILogRecordService bizLogService;
 
     private IOperatorGetService operatorGetService;
@@ -120,7 +118,6 @@ public class LogRecordInterceptor extends LogRecordValueParser implements Initia
                             }).map(x -> {
                                 String operator = !StringUtils.isEmpty(operatorIdFromService) ? operatorIdFromService : expressionValues.get(operation.getOperatorId()).get(x);
                                 return LogRecord.builder()
-                                        .tenant(tenantId)
                                         .type(expressionValues.get(operation.getType()).get(x))
                                         .spId(expressionValues.get(operation.getSpId()).get(x))
                                         .operator(operator)
@@ -140,7 +137,6 @@ public class LogRecordInterceptor extends LogRecordValueParser implements Initia
                     Map<String, String> expressionValues = processTemplate(spElTemplates, ret, targetClass, method, args, errorMsg, functionNameAndReturnMap);
                     if (logConditionPassed(operation.getCondition(), expressionValues)) {
                         LogRecord logRecord = LogRecord.builder()
-                                .tenant(tenantId)
                                 .type(expressionValues.get(operation.getType()))
                                 .spId(expressionValues.get(operation.getSpId()))
                                 .operator(getRealOperatorId(operation, operatorIdFromService, expressionValues))
@@ -222,10 +218,6 @@ public class LogRecordInterceptor extends LogRecordValueParser implements Initia
 
     public void setLogRecordOperationSource(LogRecordOperationSource logRecordOperationSource) {
         this.logRecordOperationSource = logRecordOperationSource;
-    }
-
-    public void setTenant(String tenant) {
-        this.tenantId = tenant;
     }
 
     public void setLogRecordService(ILogRecordService bizLogService) {

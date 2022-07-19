@@ -16,9 +16,6 @@ import java.lang.annotation.*;
 @Documented
 @Import(LogRecordConfigureSelector.class)
 public @interface EnableLogRecord {
-
-    String tenant();
-
     /**
      * ！不要删掉，为 null 就不代理了哦
      * true 都使用 CGLIB 代理

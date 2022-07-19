@@ -77,7 +77,6 @@ public class LogRecordProxyAutoConfiguration implements ImportAware {
     public LogRecordInterceptor logRecordInterceptor(IFunctionService functionService, DiffParseFunction diffParseFunction) {
         LogRecordInterceptor interceptor = new LogRecordInterceptor();
         interceptor.setLogRecordOperationSource(logRecordOperationSource());
-        interceptor.setTenant(enableLogRecord.getString("tenant"));
         interceptor.setLogFunctionParser(logFunctionParser(functionService));
         interceptor.setDiffParseFunction(diffParseFunction);
         return interceptor;
