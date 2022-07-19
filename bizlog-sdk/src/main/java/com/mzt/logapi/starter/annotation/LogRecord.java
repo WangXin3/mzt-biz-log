@@ -32,14 +32,14 @@ public @interface LogRecord {
     String type();
 
     /**
-     * 日志的子类型，比如订单的C端日志，和订单的B端日志，type都是订单类型，但是子类型不一样
+     * 子业务模型的id
      */
-    String subType() default "";
+    String bizNo() default "";
 
     /**
-     * 日志绑定的业务标识
+     * staffPerformanceId
      */
-    String bizNo();
+    String spId();
 
     /**
      * 日志的额外信息

@@ -13,11 +13,11 @@ import java.util.List;
 public interface IOrderService {
     @LogRecord(
             fail = "创建订单失败，失败原因：「{{#_errorMsg}}」",
-            subType = "MANAGER_VIEW",
+            bizNo = "MANAGER_VIEW",
             extra = "{{#order.toString()}}",
             success = "{{#order.purchaseName}}下了一个订单,购买商品「{{#order.productName}}」,测试变量「{{#innerOrder.productName}}」,下单结果:{{#_ret}}",
 //            isBatch = true,
-            type = LogRecordType.ORDER, bizNo = "{{#order.orderNo}}")
+            type = LogRecordType.ORDER, spId = "{{#order.orderNo}}")
     boolean createOrder_interface(Order order);
 
     boolean createOrder(Order order);
@@ -31,7 +31,7 @@ public interface IOrderService {
 
     /**
      * <p>批量创建订单</p>
-     * <p>测试 {@link LogRecord#bizNo()} 里的expression和
+     * <p>测试 {@link LogRecord#spId()} 里的expression和
      *  {@link LogRecord} 其它属性里的expression同时为 {@link List} 时
      * 且长度不一致的情况下，批量保存日志是否运行正常</p>
      * @param orders 订单列表
@@ -41,7 +41,7 @@ public interface IOrderService {
 
     /**
      * <p>批量创建订单</p>
-     * <p>测试 {@link LogRecord#bizNo()} 里的expression为 {@link List} ，而
+     * <p>测试 {@link LogRecord#spId()} 里的expression为 {@link List} ，而
      *  {@link LogRecord} 其它属性里的expression不同时为 {@link List} 时，
      * 批量保存日志是否运行正常</p>
      * @param orders 订单列表
@@ -51,7 +51,7 @@ public interface IOrderService {
 
     /**
      * <p>批量创建订单</p>
-     * <p>测试 {@link LogRecord#bizNo()} 里的expression不为 {@link List} ，而
+     * <p>测试 {@link LogRecord#spId()} 里的expression不为 {@link List} ，而
      *  {@link LogRecord} 其它属性里的expression不同时为 {@link List} 时，
      * 批量保存日志是否运行正常</p>
      * @param order 订单
