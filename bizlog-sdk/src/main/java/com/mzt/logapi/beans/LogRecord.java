@@ -34,16 +34,16 @@ public class LogRecord {
     private String type;
     /**
      * 日志的子类型，比如订单的C端日志，和订单的B端日志，type都是订单类型，但是子类型不一样
-     * @since 2.0.0 从 category 修改为 subtype
+     * @since 2.0.0 从 category 修改为 bizNo
      */
-    private String subType;
+    private String bizNo;
 
     /**
      * 日志绑定的业务标识
      */
-    @NotBlank(message = "bizNo required")
-    @Length(max = 200, message = "bizNo max length is 200")
-    private String bizNo;
+    @NotBlank(message = "spId required")
+    @Length(max = 200, message = "spId max length is 200")
+    private String spId;
     /**
      * 操作人
      */

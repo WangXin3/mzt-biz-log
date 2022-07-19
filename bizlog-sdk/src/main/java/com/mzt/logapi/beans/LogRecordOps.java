@@ -14,8 +14,8 @@ public class LogRecordOps {
     private String failLogTemplate;
     private String operatorId;
     private String type;
+    private String spId;
     private String bizNo;
-    private String subType;
     private String extra;
     private String condition;
     private boolean isBatch;
