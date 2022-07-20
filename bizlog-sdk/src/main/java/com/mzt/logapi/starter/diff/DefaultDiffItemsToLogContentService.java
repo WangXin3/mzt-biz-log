@@ -13,6 +13,8 @@ import org.springframework.util.StringUtils;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import static com.mzt.logapi.starter.support.parse.LogRecordValueParser.DIFF_IS_NULL;
+
 /**
  * @author muzhantong
  * create on 2022/1/3 8:52 下午
@@ -27,7 +29,7 @@ public class DefaultDiffItemsToLogContentService implements IDiffItemsToLogConte
     @Override
     public String toLogContent(DiffNode diffNode, final Object sourceObject, final Object targetObject) {
         if (!diffNode.hasChanges()) {
-            return "";
+            return DIFF_IS_NULL;
         }
         StringBuilder stringBuilder = new StringBuilder();
         diffNode.visit((node, visit) -> {

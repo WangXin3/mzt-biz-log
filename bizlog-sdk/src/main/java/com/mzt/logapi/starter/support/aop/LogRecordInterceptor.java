@@ -134,7 +134,8 @@ public class LogRecordInterceptor extends LogRecordValueParser implements Initia
                     Preconditions.checkNotNull(bizLogService, "bizLogService not init!!");
                     bizLogService.batchRecord(records);
                 } else {
-                    Map<String, String> expressionValues = processTemplate(spElTemplates, ret, targetClass, method, args, errorMsg, functionNameAndReturnMap);
+                    Map<String, String> expressionValues = processTemplate(spElTemplates, ret, targetClass, method, args,
+                            errorMsg, functionNameAndReturnMap);
                     if (logConditionPassed(operation.getCondition(), expressionValues)) {
                         LogRecord logRecord = LogRecord.builder()
                                 .type(expressionValues.get(operation.getType()))
@@ -151,6 +152,10 @@ public class LogRecordInterceptor extends LogRecordValueParser implements Initia
 
                         //如果 action 为空，不记录日志
                         if (StringUtils.isEmpty(logRecord.getAction())) {
+                            continue;
+                        }
+                        // 如果是更新，并且新旧对象无字段值改变，则不记录日志
+                        if ("UPDATE".equals(logRecord.getActionType()) && logRecord.getAction().contains(DIFF_IS_NULL)) {
                             continue;
                         }
                         //save log 需要新开事务，失败日志不能因为事务回滚而丢失

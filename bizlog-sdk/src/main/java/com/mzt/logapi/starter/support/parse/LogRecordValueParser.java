@@ -7,6 +7,7 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.context.expression.AnnotatedElementKey;
 import org.springframework.expression.EvaluationContext;
+import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Method;
 import java.util.*;
@@ -29,6 +30,7 @@ public class LogRecordValueParser implements BeanFactoryAware {
     private LogFunctionParser logFunctionParser;
 
     private DiffParseFunction diffParseFunction;
+    public static final String DIFF_IS_NULL = "[DIFF IS NULL]";
 
     public static int strCount(String srcText, String findText) {
         int count = 0;
@@ -138,6 +140,9 @@ public class LogRecordValueParser implements BeanFactoryAware {
             Object sourceObj = expressionEvaluator.parseExpression(params[0], annotatedElementKey, evaluationContext);
             Object targetObj = expressionEvaluator.parseExpression(params[1], annotatedElementKey, evaluationContext);
             expression = diffParseFunction.diff(sourceObj, targetObj);
+        }
+        if (StringUtils.isEmpty(expression)) {
+            return DIFF_IS_NULL;
         }
         return expression;
     }
