@@ -40,14 +40,14 @@ public class LogRecordPO {
     /**
      * 日志的子类型，比如订单的C端日志，和订单的B端日志，type都是订单类型，但是子类型不一样
      */
-    private String bizNo;
+    private String subBizNo;
 
     /**
      * 日志绑定的业务标识
      */
     @NotBlank(message = "bizNo required")
     @Length(max = 200, message = "bizNo max length is 200")
-    private String spId;
+    private String bizNo;
     /**
      * 操作人
      */

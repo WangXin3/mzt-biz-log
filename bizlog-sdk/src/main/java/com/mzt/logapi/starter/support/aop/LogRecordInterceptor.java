@@ -110,8 +110,8 @@ public class LogRecordInterceptor extends LogRecordValueParser implements Initia
 
                 if (operation.isBatch()) {
                     Map<String, List<String>> expressionValues = parseBatchTemplate(spElTemplates,
-                            ret, targetClass, method, args, errorMsg, functionNameAndReturnMap, operation.getSpId());
-                    List<LogRecord> records = IntStream.range(0, expressionValues.get(operation.getSpId()).size())
+                            ret, targetClass, method, args, errorMsg, functionNameAndReturnMap, operation.getBizNo());
+                    List<LogRecord> records = IntStream.range(0, expressionValues.get(operation.getBizNo()).size())
                             .boxed().filter(x -> {
                                 String condition = operation.getCondition();
                                 return StringUtils.isEmpty(condition) || StringUtils.endsWithIgnoreCase(expressionValues.get(condition).get(x), "true");
@@ -119,9 +119,9 @@ public class LogRecordInterceptor extends LogRecordValueParser implements Initia
                                 String operator = !StringUtils.isEmpty(operatorIdFromService) ? operatorIdFromService : expressionValues.get(operation.getOperatorId()).get(x);
                                 return LogRecord.builder()
                                         .type(expressionValues.get(operation.getType()).get(x))
-                                        .spId(expressionValues.get(operation.getSpId()).get(x))
-                                        .operator(operator)
                                         .bizNo(expressionValues.get(operation.getBizNo()).get(x))
+                                        .operator(operator)
+                                        .subBizNo(expressionValues.get(operation.getSubBizNo()).get(x))
                                         .extra(expressionValues.get(operation.getExtra()).get(x))
                                         .codeVariable(getCodeVariable(method))
                                         .action(expressionValues.get(action).get(x))
@@ -139,9 +139,9 @@ public class LogRecordInterceptor extends LogRecordValueParser implements Initia
                     if (logConditionPassed(operation.getCondition(), expressionValues)) {
                         LogRecord logRecord = LogRecord.builder()
                                 .type(expressionValues.get(operation.getType()))
-                                .spId(expressionValues.get(operation.getSpId()))
-                                .operator(getRealOperatorId(operation, operatorIdFromService, expressionValues))
                                 .bizNo(expressionValues.get(operation.getBizNo()))
+                                .operator(getRealOperatorId(operation, operatorIdFromService, expressionValues))
+                                .subBizNo(expressionValues.get(operation.getSubBizNo()))
                                 .extra(expressionValues.get(operation.getExtra()))
                                 .codeVariable(getCodeVariable(method))
                                 .action(expressionValues.get(action))
@@ -177,7 +177,7 @@ public class LogRecordInterceptor extends LogRecordValueParser implements Initia
     }
 
     private List<String> getSpElTemplates(LogRecordOps operation, String action) {
-        List<String> spElTemplates = Lists.newArrayList(operation.getType(), operation.getSpId(), operation.getBizNo(), action, operation.getExtra());
+        List<String> spElTemplates = Lists.newArrayList(operation.getType(), operation.getBizNo(), operation.getSubBizNo(), action, operation.getExtra());
         if (!StringUtils.isEmpty(operation.getCondition())) {
             spElTemplates.add(operation.getCondition());
         }

@@ -34,12 +34,12 @@ public @interface LogRecord {
     /**
      * 子业务模型的id
      */
-    String bizNo() default "";
+    String subBizNo() default "";
 
     /**
-     * staffPerformanceId
+     * 业务模型的id
      */
-    String spId();
+    String bizNo();
 
     /**
      * 日志的额外信息
