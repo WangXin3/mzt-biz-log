@@ -36,7 +36,7 @@ public class OrderServiceImpl implements IOrderService {
             subBizNo = "MANAGER_VIEW",
             extra = "{{#order.toString()}}",
             success = "{{#order.purchaseName}}下了一个订单,购买商品「{{#order.productName}}」,测试变量「{{#innerOrder.productName}}」,下单结果:{{#_ret}}",
-            type = LogRecordType.ORDER, bizNo = "{{#order.orderNo}}", actionType = "INSERT")
+            type = LogRecordType.ORDER, bizNo = "{{#order.orderNo}}", actionType = "INSERT", detail = "{{#order.purchaseName}}")
     public boolean createOrder(Order order) {
         log.info("【创建订单】orderNo={}", order.getOrderNo());
         // db insert order

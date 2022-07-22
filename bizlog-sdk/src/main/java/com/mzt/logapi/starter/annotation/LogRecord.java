@@ -49,8 +49,9 @@ public @interface LogRecord {
     String condition() default "";
 
     /**
-     * <p>是否是批量操作，3.0.0版本移除了这个功能
-     * */
+     * 是否是批量操作，这个功能未测试，可能有bug.
+     * 3.0.0版本移除了这个功能.
+     */
     @Deprecated
     boolean isBatch() default false;
 
@@ -58,4 +59,9 @@ public @interface LogRecord {
      * 操作类型，比如：增、删、改，可自定义枚举，便于查询某种操作类型的日志
      */
     String actionType() default "";
+
+    /**
+     * 详细日志
+     */
+    String detail() default "";
 }

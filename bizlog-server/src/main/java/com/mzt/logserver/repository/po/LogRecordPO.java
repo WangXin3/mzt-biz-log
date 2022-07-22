@@ -78,6 +78,8 @@ public class LogRecordPO {
 
     private String actionType;
 
+    private String detail;
+
     public static LogRecordPO from(LogRecord logRecord) {
         LogRecordPO logRecordPO = new LogRecordPO();
         BeanUtils.copyProperties(logRecord, logRecordPO);

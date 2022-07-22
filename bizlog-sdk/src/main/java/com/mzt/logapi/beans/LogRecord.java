@@ -79,4 +79,6 @@ public class LogRecord {
     private Map<CodeVariableType, Object> codeVariable;
 
     private String actionType;
+
+    private String detail;
 }

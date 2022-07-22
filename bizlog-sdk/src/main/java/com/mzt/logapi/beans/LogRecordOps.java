@@ -20,4 +20,5 @@ public class LogRecordOps {
     private String condition;
     private boolean isBatch;
     private String actionType;
+    private String detail;
 }

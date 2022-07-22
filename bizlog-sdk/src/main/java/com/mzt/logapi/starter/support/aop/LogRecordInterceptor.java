@@ -128,6 +128,7 @@ public class LogRecordInterceptor extends LogRecordValueParser implements Initia
                                         .fail(!success)
                                         .createTime(new Date())
                                         .actionType(operation.getActionType())
+                                        .detail(expressionValues.get(operation.getDetail()).get(x))
                                         .build();
                             }).filter(x -> !StringUtils.isEmpty(x.getAction()))
                             .collect(Collectors.toList());
@@ -148,6 +149,7 @@ public class LogRecordInterceptor extends LogRecordValueParser implements Initia
                                 .fail(!success)
                                 .createTime(new Date())
                                 .actionType(operation.getActionType())
+                                .detail(expressionValues.get(operation.getDetail()))
                                 .build();
 
                         //如果 action 为空，不记录日志
@@ -177,7 +179,8 @@ public class LogRecordInterceptor extends LogRecordValueParser implements Initia
     }
 
     private List<String> getSpElTemplates(LogRecordOps operation, String action) {
-        List<String> spElTemplates = Lists.newArrayList(operation.getType(), operation.getBizNo(), operation.getSubBizNo(), action, operation.getExtra());
+        List<String> spElTemplates = Lists.newArrayList(operation.getType(), operation.getBizNo(), operation.getSubBizNo(),
+                action, operation.getExtra(), operation.getDetail());
         if (!StringUtils.isEmpty(operation.getCondition())) {
             spElTemplates.add(operation.getCondition());
         }
