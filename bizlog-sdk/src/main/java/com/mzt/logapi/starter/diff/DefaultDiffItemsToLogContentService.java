@@ -99,6 +99,16 @@ public class DefaultDiffItemsToLogContentService implements IDiffItemsToLogConte
         return fieldNamePrefix;
     }
 
+    /**
+     * @param filedLogName      字段的中文名
+     * @param node              /
+     * @param state             该字段是新增（从null变非null）、修改（从A改为B）、删除（从非null改为null）
+     * @param sourceObject      源对象
+     * @param targetObject      目标对象
+     * @param functionName      字段具体值转换函数的名称
+     * @param valueIsCollection 字段的类型是否为集合类型
+     * @return /
+     */
     public String getDiffLogContent(String filedLogName, DiffNode node, DiffNode.State state, Object sourceObject, Object targetObject, String functionName, boolean valueIsCollection) {
         //集合走单独的diff模板
         if (valueIsCollection) {
@@ -110,6 +120,17 @@ public class DefaultDiffItemsToLogContentService implements IDiffItemsToLogConte
             String listDelContent = listToContent(functionName, delItemList);
             return logRecordProperties.formatList(filedLogName, listAddContent, listDelContent);
         }
+
+        // TODO 如果要记录每个字段的修改记录，这里是扩展点
+        /*
+               filedLogName 字段的中文名，即加在字段上@DiffLogField注解的name值
+               node.getPropertyName() 字段名
+               getFieldValue(node, sourceObject) 源字段值
+               getFieldValue(node, targetObject) 目标字段值
+
+               转换函数名，也就是加在字段上@DiffLogField注解的function值
+               getFunctionValue(字段值, 转换函数名) 字段值转用户可以看懂的文本
+         */
         switch (state) {
             case ADDED:
                 return logRecordProperties.formatAdd(filedLogName, getFunctionValue(getFieldValue(node, targetObject), functionName));
