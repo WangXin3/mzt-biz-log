@@ -157,7 +157,7 @@ public class LogRecordInterceptor extends LogRecordValueParser implements Initia
                             continue;
                         }
                         // 如果是更新，并且新旧对象无字段值改变，则不记录日志
-                        if ("UPDATE".equals(logRecord.getActionType()) && logRecord.getAction().contains(DIFF_IS_NULL)) {
+                        if ("UPDATE".equals(logRecord.getActionType()) && logRecord.getDetail().contains(DIFF_IS_NULL)) {
                             continue;
                         }
                         //save log 需要新开事务，失败日志不能因为事务回滚而丢失
