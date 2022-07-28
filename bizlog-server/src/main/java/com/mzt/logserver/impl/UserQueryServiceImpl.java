@@ -17,7 +17,7 @@ import java.util.List;
 public class UserQueryServiceImpl implements UserQueryService {
 
     @Override
-    @LogRecord(success = "获取用户列表,内层方法调用人{{#user}}", type = LogRecordType.ORDER, bizNo = "MT0000011")
+    @LogRecord(success = "获取用户列表,内层方法调用人{{#user}}", subBiz = LogRecordType.ORDER, bizNo = "MT0000011", biz = "")
     public List<User> getUserList(List<String> userIds) {
         LogRecordContext.putVariable("user", "mzt");
         return null;

@@ -36,7 +36,7 @@ public class OrderServiceImpl implements IOrderService {
             subBizNo = "MANAGER_VIEW",
             extra = "{{#order.toString()}}",
             success = "{{#order.purchaseName}}下了一个订单,购买商品「{{#order.productName}}」,测试变量「{{#innerOrder.productName}}」,下单结果:{{#_ret}}",
-            type = LogRecordType.ORDER, bizNo = "{{#order.orderNo}}", actionType = "INSERT", detail = "{{#order.purchaseName}}")
+            subBiz = LogRecordType.ORDER, bizNo = "{{#order.orderNo}}", actionType = "INSERT", detail = "{{#order.purchaseName}}", biz = "1")
     public boolean createOrder(Order order) {
         log.info("【创建订单】orderNo={}", order.getOrderNo());
         // db insert order
@@ -50,8 +50,8 @@ public class OrderServiceImpl implements IOrderService {
     @LogRecord(fail = "创建订单失败，失败原因：「{{#_errorMsg}}」",
             extra = "{{#orders}}",
             success = "{{#purchaseNameList}}下了一个订单,购买商品「{{#productNameList}}」,下单结果:{{#_ret}}",
-            type = LogRecordType.ORDER, bizNo = "{{#orderNoList}}",
-            isBatch = true, actionType = "INSERT")
+            subBiz = LogRecordType.ORDER, bizNo = "{{#orderNoList}}",
+            isBatch = true, actionType = "INSERT", biz = "")
     public boolean createBatchOrder(List<Order> orders) {
         Optional.ofNullable(orders).ifPresent(x -> {
             x.forEach(y -> log.info("【创建订单】orderNo={}", y.getOrderNo()));
@@ -72,8 +72,8 @@ public class OrderServiceImpl implements IOrderService {
     @LogRecord(fail = "创建订单失败，失败原因：「{{#_errorMsg}}」",
             extra = "{{#orders}}",
             success = "{{#purchaseNameList}}下了一个订单,购买商品「{{#productNameList}}」,下单结果:{{#_ret}}",
-            type = LogRecordType.ORDER, bizNo = "{{#orderNoList}}",
-            isBatch = true)
+            subBiz = LogRecordType.ORDER, bizNo = "{{#orderNoList}}",
+            isBatch = true, biz = "")
     public boolean createBatchOrder1(List<Order> orders) {
         Optional.ofNullable(orders).ifPresent(x -> {
             List<String> purchaseNameList = x.stream()
@@ -101,8 +101,8 @@ public class OrderServiceImpl implements IOrderService {
     @LogRecord(fail = "创建订单失败，失败原因：「{{#_errorMsg}}」",
             extra = "{{#orders}}",
             success = "{{#purchaseNameList}}下了一个订单,购买商品「{{#productNameList}}」,下单结果:{{#_ret}}",
-            type = LogRecordType.ORDER, bizNo = "{{#orderNoList}}",
-            isBatch = true)
+            subBiz = LogRecordType.ORDER, bizNo = "{{#orderNoList}}",
+            isBatch = true, biz = "")
     public boolean createBatchOrder2(List<Order> orders) {
         Optional.ofNullable(orders).ifPresent(x -> {
             if (CollectionUtil.isNotEmpty(x)) {
@@ -120,8 +120,8 @@ public class OrderServiceImpl implements IOrderService {
     @LogRecord(fail = "创建订单失败，失败原因：「{{#_errorMsg}}」",
             extra = "{{#order}}",
             success = "{{#order.purchaseName}}下了一个订单,购买商品「{{#productNameList}}」,下单结果:{{#_ret}}",
-            type = LogRecordType.ORDER, bizNo = "{{#order.orderNo}}",
-            isBatch = true)
+            subBiz = LogRecordType.ORDER, bizNo = "{{#order.orderNo}}",
+            isBatch = true, biz = "")
     public boolean createBatchOrder3(Order order) {
         Optional.ofNullable(order).ifPresent(x -> {
             List<String> productNameList = CollectionUtil.newArrayList(x.getProductName(), "超值优惠香酥鸭套餐");
@@ -149,7 +149,7 @@ public class OrderServiceImpl implements IOrderService {
             extra = "{{#order.toString()}}",
             success = "{{#order.purchaseName}}下了一个订单,购买商品「{{#order.productName}}」,测试变量「{{#innerOrder.productName}}」,下单结果:{{#_ret}}",
 //            isBatch = true,
-            type = LogRecordType.ORDER, bizNo = "{{#order.orderNo}}")
+            subBiz = LogRecordType.ORDER, bizNo = "{{#order.orderNo}}", biz = "")
     public boolean createOrder_fail(Order order) {
         log.info("【创建订单】orderNo={}", order.getOrderNo());
         // db insert order
@@ -163,52 +163,39 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    @LogRecord(success = "更新了订单{ORDER_BEFORE{#order.orderId}},更新内容为...",
-            type = LogRecordType.ORDER, bizNo = "{{#order.orderNo}}",
-//            isBatch = true,
-            extra = "{{#order.toString()}}")
+    @LogRecord(success = "更新了订单{ORDER_BEFORE{#order.orderId}},更新内容为...", subBiz = LogRecordType.ORDER, bizNo = "{{#order.orderNo}}", extra = "{{#order.toString()}}", biz = "")
     public boolean updateBefore(Long orderId, Order order) {
         order.setOrderId(10000L);
         return false;
     }
 
     @Override
-    @LogRecord(success = "更新了订单{ORDER{#order.orderId}},更新内容为...",
-            type = LogRecordType.ORDER, bizNo = "{{#order.orderNo}}",
-            extra = "{{#order.toString()}}")
+    @LogRecord(success = "更新了订单{ORDER{#order.orderId}},更新内容为...", subBiz = LogRecordType.ORDER, bizNo = "{{#order.orderNo}}", extra = "{{#order.toString()}}", biz = "")
     public boolean updateAfter(Long orderId, Order order) {
         order.setOrderId(10000L);
         return false;
     }
 
     @Override
-    @LogRecord(success = "更新了订单{IDENTITY{#order.orderId}},更新内容为...{IDENTITY{#order.orderNo}}",
-            type = LogRecordType.ORDER, bizNo = "{{#order.orderNo}}",
-            extra = "{{#order.toString()}}")
+    @LogRecord(success = "更新了订单{IDENTITY{#order.orderId}},更新内容为...{IDENTITY{#order.orderNo}}", subBiz = LogRecordType.ORDER, bizNo = "{{#order.orderNo}}", extra = "{{#order.toString()}}", biz = "")
     public boolean identity(Long orderId, Order order) {
         return false;
     }
 
     @Override
-    @LogRecord(success = "更新了订单{_DIFF{#oldOrder, #newOrder}}",
-            type = LogRecordType.ORDER, bizNo = "{{#newOrder.orderNo}}",
-            extra = "{{#newOrder.toString()}}")
+    @LogRecord(success = "更新了订单{_DIFF{#oldOrder, #newOrder}}", subBiz = LogRecordType.ORDER, bizNo = "{{#newOrder.orderNo}}", extra = "{{#newOrder.toString()}}", biz = "")
     public boolean diff(Order oldOrder, Order newOrder) {
 
         return false;
     }
 
     @Override
-    @LogRecord(success = "测试刀了符号{DOLLAR{#order.orderId}}哈哈哈",
-            type = LogRecordType.ORDER, bizNo = "{{#order.orderNo}}",
-            extra = "{{#order.toString()}}")
+    @LogRecord(success = "测试刀了符号{DOLLAR{#order.orderId}}哈哈哈", subBiz = LogRecordType.ORDER, bizNo = "{{#order.orderNo}}", extra = "{{#order.toString()}}", biz = "")
     public boolean dollar(Long orderId, Order order) {
         return false;
     }
 
-    @LogRecord(success = "更新了订单{_DIFF{#newOrder}}",
-            type = LogRecordType.ORDER, bizNo = "{{#newOrder.orderNo}}",
-            extra = "{{#newOrder.toString()}}")
+    @LogRecord(success = "更新了订单{_DIFF{#newOrder}}", subBiz = LogRecordType.ORDER, bizNo = "{{#newOrder.orderNo}}", extra = "{{#newOrder.toString()}}", biz = "")
     @Override
     public boolean diff1(Order newOrder) {
 
@@ -217,9 +204,7 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    @LogRecord(success = "更新了订单{_DIFF{#newOrder}}",
-            type = LogRecordType.ORDER, bizNo = "{{#newOrder.orderNo}}",
-            extra = "{{#newOrder.toString()}}")
+    @LogRecord(success = "更新了订单{_DIFF{#newOrder}}", subBiz = LogRecordType.ORDER, bizNo = "{{#newOrder.orderNo}}", extra = "{{#newOrder.toString()}}", biz = "")
     public boolean diff2(Order newOrder) {
         Order order = new Order();
         order.setOrderId(99L);
@@ -236,9 +221,7 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    @LogRecord(success = "更新了订单{_DIFF{#oldOrders, #newOrders}}",
-            type = LogRecordType.ORDER, bizNo = "{{#orderNos}}",
-            extra = "{{#newOrders}}", isBatch = true)
+    @LogRecord(success = "更新了订单{_DIFF{#oldOrders, #newOrders}}", subBiz = LogRecordType.ORDER, bizNo = "{{#orderNos}}", extra = "{{#newOrders}}", isBatch = true, biz = "")
     public boolean diff3(List<Order> oldOrders, List<Order> newOrders) {
         Optional.ofNullable(newOrders).ifPresent(x -> LogRecordContext.putVariable("orderNos",
                 x.stream().map(Order::getOrderNo).collect(Collectors.toList())));
@@ -246,9 +229,7 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    @LogRecord(success = "更新了订单{_DIFF{#oldOrder, #newOrders}}",
-            type = LogRecordType.ORDER, bizNo = "{{#id}}",
-            extra = "{{#newOrders}}", isBatch = true)
+    @LogRecord(success = "更新了订单{_DIFF{#oldOrder, #newOrders}}", subBiz = LogRecordType.ORDER, bizNo = "{{#id}}", extra = "{{#newOrders}}", isBatch = true, biz = "")
     public boolean diff4(Order oldOrder, List<Order> newOrders) {
         Optional.ofNullable(newOrders).ifPresent(x -> {
             List<String> id = x.stream().map(Order::getOrderNo).collect(Collectors.toList());
@@ -259,9 +240,7 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    @LogRecord(success = "更新了订单{_DIFF{#oldOrders, #newOrder}}",
-            type = LogRecordType.ORDER, bizNo = "{{#id}}",
-            extra = "{{#newOrder}}", isBatch = true)
+    @LogRecord(success = "更新了订单{_DIFF{#oldOrders, #newOrder}}", subBiz = LogRecordType.ORDER, bizNo = "{{#id}}", extra = "{{#newOrder}}", isBatch = true, biz = "")
     public boolean diff5(List<Order> oldOrders, Order newOrder) {
         Optional.ofNullable(newOrder).ifPresent(x -> {
             List<String> id = new ArrayList<>(16);
@@ -274,9 +253,7 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    @LogRecord(success = "更新了订单{_DIFF{#oldOrder, #newOrder}}",
-            type = LogRecordType.ORDER, bizNo = "{{#id}}",
-            extra = "{{#newOrder.toString()}}", isBatch = true)
+    @LogRecord(success = "更新了订单{_DIFF{#oldOrder, #newOrder}}", subBiz = LogRecordType.ORDER, bizNo = "{{#id}}", extra = "{{#newOrder.toString()}}", isBatch = true, biz = "")
     public boolean diff6(Order oldOrder, Order newOrder) {
         Optional.ofNullable(newOrder).ifPresent(x -> {
             List<String> id = new ArrayList<>(16);
@@ -289,9 +266,7 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    @LogRecord(success = "更新了订单{_DIFF{#newOrders}}",
-            type = LogRecordType.ORDER, bizNo = "{{#id}}",
-            extra = "{{#newOrders}}", isBatch = true)
+    @LogRecord(success = "更新了订单{_DIFF{#newOrders}}", subBiz = LogRecordType.ORDER, bizNo = "{{#id}}", extra = "{{#newOrders}}", isBatch = true, biz = "")
     public boolean diff7(List<Order> newOrders) {
         Optional.ofNullable(newOrders).ifPresent(x -> {
             Order orderA = new Order();
@@ -326,9 +301,7 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    @LogRecord(success = "更新了订单{_DIFF{#newOrder}}",
-            type = LogRecordType.ORDER, bizNo = "{{#id}}",
-            extra = "{{#newOrder}}", isBatch = true)
+    @LogRecord(success = "更新了订单{_DIFF{#newOrder}}", subBiz = LogRecordType.ORDER, bizNo = "{{#id}}", extra = "{{#newOrder}}", isBatch = true, biz = "")
     public boolean diff8(Order newOrder) {
         Optional.ofNullable(newOrder).ifPresent(x -> {
             Order orderA = new Order();
@@ -365,18 +338,13 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    @LogRecord(success = "更新了订单{ORDER{#orderId}},更新内容为...",
-            type = LogRecordType.ORDER, bizNo = "{{#order.orderNo}}",
-//            isBatch = true,
-            condition = "{{#condition == null}}")
+    @LogRecord(success = "更新了订单{ORDER{#orderId}},更新内容为...", subBiz = LogRecordType.ORDER, bizNo = "{{#order.orderNo}}", condition = "{{#condition == null}}", biz = "")
     public boolean testCondition(Long orderId, Order order, String condition) {
         return false;
     }
 
     @Override
-    @LogRecord(success = "更新了订单{ORDER{#orderId}},更新内容为..{{#title}}",
-//            isBatch = true,
-            type = LogRecordType.ORDER, bizNo = "{{#order.orderNo}}")
+    @LogRecord(success = "更新了订单{ORDER{#orderId}},更新内容为..{{#title}}", subBiz = LogRecordType.ORDER, bizNo = "{{#order.orderNo}}", biz = "")
     public boolean testContextCallContext(Long orderId, Order order) {
         LogRecordContext.putVariable("title", "外层调用");
         userQueryService.getUserList(Lists.newArrayList("mzt"));
@@ -384,16 +352,13 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    @LogRecord(success = "更新了订单{ORDER{#orderId}},更新内容为..{{#title}}",
-//            isBatch = true,
-            type = LogRecordType.ORDER, subBizNo = "{{#order.orderNo}}", bizNo = "{{#order.orderNo}}")
+    @LogRecord(success = "更新了订单{ORDER{#orderId}},更新内容为..{{#title}}", subBiz = LogRecordType.ORDER, subBizNo = "{{#order.orderNo}}", bizNo = "{{#order.orderNo}}", biz = "")
     public boolean testSubTypeSpEl(Long orderId, Order order) {
         return false;
     }
 
     @Override
-    @LogRecord(success = "更新了订单{ORDER{#orderId}},更新内容为..{{#title}}",
-            type = LogRecordType.ORDER, bizNo = "{{#order.orderNo}}")
+    @LogRecord(success = "更新了订单{ORDER{#orderId}},更新内容为..{{#title}}", subBiz = LogRecordType.ORDER, bizNo = "{{#order.orderNo}}", biz = "")
     public boolean testVariableInfo(Long orderId, Order order) {
         return false;
     }

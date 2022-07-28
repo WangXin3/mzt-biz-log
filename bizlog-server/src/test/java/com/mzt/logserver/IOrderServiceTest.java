@@ -39,6 +39,7 @@ public class IOrderServiceTest extends BaseTest {
         Assert.assertFalse(logRecord.isFail());
         Assert.assertEquals(logRecord.getActionType(), "INSERT");
         Assert.assertEquals(logRecord.getDetail(), order.getPurchaseName());
+        Assert.assertEquals(logRecord.getBiz(), "1");
         logRecordService.clean();
     }
 

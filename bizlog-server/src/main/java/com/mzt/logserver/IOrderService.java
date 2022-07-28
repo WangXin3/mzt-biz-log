@@ -17,7 +17,7 @@ public interface IOrderService {
             extra = "{{#order.toString()}}",
             success = "{{#order.purchaseName}}下了一个订单,购买商品「{{#order.productName}}」,测试变量「{{#innerOrder.productName}}」,下单结果:{{#_ret}}",
 //            isBatch = true,
-            type = LogRecordType.ORDER, bizNo = "{{#order.orderNo}}")
+            subBiz = LogRecordType.ORDER, bizNo = "{{#order.orderNo}}", biz = "")
     boolean createOrder_interface(Order order);
 
     boolean createOrder(Order order);

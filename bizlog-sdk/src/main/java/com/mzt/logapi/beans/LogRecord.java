@@ -29,9 +29,9 @@ public class LogRecord {
      *
      * @since 2.0.0 从 prefix 修改为了type
      */
-    @NotBlank(message = "type required")
-    @Length(max = 200, message = "type max length is 200")
-    private String type;
+    @NotBlank(message = "subBiz required")
+    @Length(max = 200, message = "subBiz max length is 200")
+    private String subBiz;
     /**
      * 日志的子类型，比如订单的C端日志，和订单的B端日志，type都是订单类型，但是子类型不一样
      * @since 2.0.0 从 category 修改为 bizNo
@@ -81,4 +81,6 @@ public class LogRecord {
     private String actionType;
 
     private String detail;
+
+    private String biz;
 }

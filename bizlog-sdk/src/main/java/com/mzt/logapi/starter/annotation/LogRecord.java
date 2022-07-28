@@ -5,6 +5,8 @@ import java.lang.annotation.*;
 /**
  * @author muzhantong
  * create on 2020/4/29 3:22 下午
+ * 支持SPEL的字段，也就是会支持自定义方法或者SPEL语句的字段
+ * biz, bizNo, subBiz, subBizNo, extra, detail
  */
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
@@ -12,12 +14,12 @@ import java.lang.annotation.*;
 @Documented
 public @interface LogRecord {
     /**
-     * 方法执行成功后的日志模版
+     * 方法执行成功后的日志模版，支持SPEL
      */
     String success();
 
     /**
-     * 方法执行失败后的日志模版
+     * 方法执行失败后的日志模版，支持SPEL
      */
     String fail() default "";
 
@@ -27,22 +29,26 @@ public @interface LogRecord {
     String operator() default "";
 
     /**
-     * 操作日志的类型，比如：订单类型、商品类型
+     * 主业务模块，支持SPEL
      */
-    String type();
+    String biz();
 
     /**
-     * 子业务模型的id
+     * 主业务模块的id，支持SPEL
+     */
+    String bizNo();
+    /**
+     * 子业务模块，支持SPEL
+     */
+    String subBiz() default "";
+
+    /**
+     * 子业务模块的id，支持SPEL
      */
     String subBizNo() default "";
 
     /**
-     * 业务模型的id
-     */
-    String bizNo();
-
-    /**
-     * 日志的额外信息
+     * 日志的额外信息，支持SPEL
      */
     String extra() default "";
 
@@ -61,7 +67,9 @@ public @interface LogRecord {
     String actionType() default "";
 
     /**
-     * 详细日志
+     * 详细日志，支持SPEL
      */
     String detail() default "";
+
+
 }

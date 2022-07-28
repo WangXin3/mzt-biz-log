@@ -2,7 +2,7 @@ create table t_logrecord
 (
     `id`            bigint(11) unsigned not null default 0 auto_increment comment 'id',
     `tenant`        varchar(63)         not null default '' comment '租户标识',
-    `type`          varchar(63)         not null default '' comment '保存的操作日志的类型，比如：订单类型、商品类型',
+    `sub_biz`       varchar(63)         not null default '' comment '保存的操作日志的类型，比如：订单类型、商品类型',
     `sub_biz_no`    varchar(63)         not null default '' comment '日志的子类型，比如订单的C端日志，和订单的B端日志，type都是订单类型，但是子类型不一样',
     `biz_no`        varchar(63)         not null default '' comment '日志绑定的业务标识',
     `operator`      varchar(63)         not null default '' comment '操作人',
@@ -13,5 +13,6 @@ create table t_logrecord
     `code_variable` varchar(2000)       not null default '' comment '代码变量信息',
     `action_type`   varchar(20)         not null default '' comment '操作类型',
     `detail`        text                not null default '' comment '详细日志',
+    `biz`           varchar(63)         not null default '' comment '主业务模块',
     primary key (id)
 );

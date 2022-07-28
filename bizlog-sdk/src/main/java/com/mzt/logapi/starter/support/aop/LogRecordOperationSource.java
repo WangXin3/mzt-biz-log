@@ -53,7 +53,7 @@ public class LogRecordOperationSource {
         LogRecordOps recordOps = LogRecordOps.builder()
                 .successLogTemplate(recordAnnotation.success())
                 .failLogTemplate(recordAnnotation.fail())
-                .type(recordAnnotation.type())
+                .subBiz(recordAnnotation.subBiz())
                 .bizNo(recordAnnotation.bizNo())
                 .operatorId(recordAnnotation.operator())
                 .subBizNo(recordAnnotation.subBizNo())
@@ -62,6 +62,7 @@ public class LogRecordOperationSource {
                 .isBatch(recordAnnotation.isBatch())
                 .actionType(recordAnnotation.actionType())
                 .detail(recordAnnotation.detail())
+                .biz(recordAnnotation.biz())
                 .build();
         validateLogRecordOperation(ae, recordOps);
         return recordOps;

@@ -17,7 +17,7 @@ public class LogRecordRepositoryImpl extends ServiceImpl<LogRecordMapper, LogRec
         LogRecordMapper baseMapper = super.getBaseMapper();
         QueryWrapper<LogRecordPO> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda()
-                .eq(LogRecordPO::getType, type)
+                .eq(LogRecordPO::getSubBiz, type)
                 .eq(LogRecordPO::getBizNo, bizNo)
                 .orderByDesc(LogRecordPO::getCreateTime);
         return baseMapper.selectList(queryWrapper);
@@ -28,7 +28,7 @@ public class LogRecordRepositoryImpl extends ServiceImpl<LogRecordMapper, LogRec
         LogRecordMapper baseMapper = super.getBaseMapper();
         QueryWrapper<LogRecordPO> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda()
-                .eq(LogRecordPO::getType, type)
+                .eq(LogRecordPO::getSubBiz, type)
                 .eq(LogRecordPO::getSubBizNo, subType)
                 .eq(LogRecordPO::getBizNo, bizNo)
                 .orderByDesc(LogRecordPO::getCreateTime);
@@ -38,7 +38,7 @@ public class LogRecordRepositoryImpl extends ServiceImpl<LogRecordMapper, LogRec
     @Override
     public List<LogRecordPO> queryLog(String type) {
         QueryWrapper<LogRecordPO> wrapper = new QueryWrapper<>();
-        wrapper.lambda().eq(LogRecordPO::getType, type);
+        wrapper.lambda().eq(LogRecordPO::getSubBiz, type);
         return baseMapper.selectList(wrapper);
     }
 

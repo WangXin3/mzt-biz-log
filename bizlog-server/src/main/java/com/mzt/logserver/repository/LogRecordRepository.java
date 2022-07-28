@@ -13,7 +13,7 @@ public interface LogRecordRepository extends IService<LogRecordPO> {
     /**
      * <p>根据操作日志的类型查找日志</p>
      * @param type
-     * @see com.mzt.logapi.starter.annotation.LogRecord#type()
+     * @see com.mzt.logapi.starter.annotation.LogRecord#subBiz()
      * @see LogRecordPO#type
      * @return 日志列表
      * */

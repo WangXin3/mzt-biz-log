@@ -34,9 +34,9 @@ public class LogRecordPO {
     /**
      * 保存的操作日志的类型，比如：订单类型、商品类型
      */
-    @NotBlank(message = "type required")
-    @Length(max = 200, message = "type max length is 200")
-    private String type;
+    @NotBlank(message = "subBiz required")
+    @Length(max = 200, message = "subBiz max length is 200")
+    private String subBiz;
     /**
      * 日志的子类型，比如订单的C端日志，和订单的B端日志，type都是订单类型，但是子类型不一样
      */
@@ -79,6 +79,8 @@ public class LogRecordPO {
     private String actionType;
 
     private String detail;
+
+    private String biz;
 
     public static LogRecordPO from(LogRecord logRecord) {
         LogRecordPO logRecordPO = new LogRecordPO();
